@@ -18,4 +18,16 @@ public class UserService {
         ValidationService.validateUserCredentials(userOptional);
         return userOptional.get();
     }
+
+
+    // Kontrolli kas selline kasutaja on juba olemas. Kui on, siis throw error
+    public void validateIfUsernameIsAvailable(String username) {
+        boolean userExists = userRepository.userExistsBy(username);
+        ValidationService.validateUsernameAvailability(userExists);
+    }
+
+
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
 }

@@ -1,5 +1,6 @@
-package ee.camping.back_camping.domain.user;
+package ee.camping.back_camping.domain.user.contact;
 
+import ee.camping.back_camping.domain.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -1,12 +1,15 @@
 package ee.camping.back_camping.domain.user;
 
+import ee.camping.back_camping.business.Status;
 import ee.camping.back_camping.business.login.LoginResponseDto;
+import ee.camping.back_camping.business.users.NewUserDto;
+import ee.camping.back_camping.domain.user.role.Role;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-18T11:58:44+0300",
+    date = "2023-05-19T14:54:20+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -27,6 +30,22 @@ public class UserMapperImpl implements UserMapper {
         LoginResponseDto loginResponseDto = new LoginResponseDto( userId, roleName );
 
         return loginResponseDto;
+    }
+
+    @Override
+    public User toUser(NewUserDto newUserDto) {
+        if ( newUserDto == null ) {
+            return null;
+        }
+
+        User user = new User();
+
+        user.setUsername( newUserDto.getUsername() );
+        user.setPassword( newUserDto.getPassword() );
+
+        user.setStatus( Status.ACTIVE.getLetter() );
+
+        return user;
     }
 
     private String userRoleName(User user) {

@@ -1,4 +1,4 @@
-package ee.camping.back_camping.domain.user;
+package ee.camping.back_camping.domain.user.role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

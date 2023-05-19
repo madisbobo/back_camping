@@ -24,7 +24,7 @@ public class LoginController {
                     Kui vastet ei leita vistakse viga errorCode'ga 111""")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "403", description = "Vale kasutajanimi või parool", content = @Content(schema = @Schema(implementation = ApiError.class)))})
+            @ApiResponse(responseCode = "403", description = "Vale kasutajanimi või parool.", content = @Content(schema = @Schema(implementation = ApiError.class)))})
     public LoginResponseDto login(@RequestParam String username, @RequestParam String password) {
         return loginService.login(username, password);
 
