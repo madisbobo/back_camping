@@ -54,4 +54,8 @@ public class UsersService {
         contactService.addContact(contact);
 
     }
+
+    public void deleteUser(Integer userId) {
+        userService.deleteUserBy(userId);
+    }
 }
