@@ -12,4 +12,8 @@ public class ContactService {
     public void addContact(Contact contact) {
         contactRepository.save(contact);
     }
+
+    public Contact getUserContactBy(Integer userId) {
+        return contactRepository.getUserContactBy(userId);
+    }
 }

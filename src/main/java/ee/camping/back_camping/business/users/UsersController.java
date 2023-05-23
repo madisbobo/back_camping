@@ -1,6 +1,7 @@
 package ee.camping.back_camping.business.users;
 
 import ee.camping.back_camping.business.login.LoginResponseDto;
+import ee.camping.back_camping.domain.user.contact.Contact;
 import ee.camping.back_camping.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,6 +36,18 @@ public class UsersController {
     @Operation(summary = "Pooleli oleva kasutaja kustutamine", description = "Anname kaasa userId ja kustutame kasutaja")
     public void deleteUser(@RequestParam Integer userId) {
         usersService.deleteUser(userId);
+    }
+
+    @GetMapping("/my-profile")
+    @Operation(summary = "Kasutajaandmete vaatamine", description = "Anname kasutaja userId ja tagastab tema andmeid profiili all")
+    public ContactDto getContact(@RequestParam Integer userId) {
+        return usersService.getContact(userId);
+    }
+
+    @PutMapping("/edit-profile")
+    @Operation(summary = "Kasutaja andmete muutmine", description = "Anname kasutaja userId ja muudetud väljad (eesnimi, perekonnanimi, e-post, telefoni, proofilipildi")
+    public void editContact(@RequestBody ContactDto contactDto) {
+        usersService.editContact(contactDto);
     }
 
 }

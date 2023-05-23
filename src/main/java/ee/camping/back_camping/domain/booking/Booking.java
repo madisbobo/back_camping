@@ -1,7 +1,8 @@
 package ee.camping.back_camping.domain.booking;
 
-import ee.camping.back_camping.domain.listing.Listing;
 import ee.camping.back_camping.domain.user.User;
+import ee.camping.back_camping.domain.listing.Listing;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

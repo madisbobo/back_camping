@@ -58,4 +58,18 @@ public class UsersService {
     public void deleteUser(Integer userId) {
         userService.deleteUserBy(userId);
     }
+
+    public ContactDto getContact(Integer userId) {
+        Contact contact = contactService.getUserContactBy(userId);
+        return contactMapper.toContactDto(contact);
+
+    }
+
+    public void editContact(ContactDto contactDto) {
+        Contact contact = contactService.getUserContactBy(contactDto.getUserId());
+        contactMapper.partialUpdate(contactDto, contact);
+        User user = userService.findUserBy(contactDto.getUserId());
+        contact.setUser(user);
+        contactService.addContact(contact);
+    }
 }
