@@ -1,5 +1,6 @@
-package ee.camping.back_camping.domain.listing;
+package ee.camping.back_camping.domain.listing.image;
 
+import ee.camping.back_camping.domain.listing.Listing;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
