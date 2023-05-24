@@ -2,11 +2,9 @@ package ee.camping.back_camping.business.listings;
 
 import ee.camping.back_camping.domain.listing.*;
 import ee.camping.back_camping.domain.listing.image.Image;
-import ee.camping.back_camping.domain.listing.image.ImageDto;
 import ee.camping.back_camping.domain.listing.image.ImageMapper;
 import ee.camping.back_camping.domain.listing.image.ImageService;
-import ee.camping.back_camping.domain.review.Review;
-import ee.camping.back_camping.domain.review.ReviewDto;
+import ee.camping.back_camping.domain.review.ScoreInfo;
 import ee.camping.back_camping.domain.review.ReviewMapper;
 import ee.camping.back_camping.domain.review.ReviewService;
 import ee.camping.back_camping.util.ImageUtil;
@@ -54,8 +52,9 @@ public class ListingsService {
 
     private void addRatings(List<ListingPreviewDto> listingPreviewDtos) {
         for (ListingPreviewDto listingPreviewDto : listingPreviewDtos) {
-            ReviewDto reviewInfo = reviewService.findReviewInfo(listingPreviewDto.getListingId());
-
+            ScoreInfo reviewInfo = reviewService.findReviewInfo(listingPreviewDto.getListingId());
+            listingPreviewDto.setNumberOfScores(reviewInfo.getNumberOfScores());
+            listingPreviewDto.setAverageScore(reviewInfo.getAverageScore());
             System.out.println();
 
 

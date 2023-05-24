@@ -8,12 +8,8 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class ReviewDto implements Serializable {
+@AllArgsConstructor
+public class ScoreInfo implements Serializable {
     private Long numberOfScores;
     private Double averageScore;
-
-    public ReviewDto(Long numberOfScores, Double averageScore) {
-        this.numberOfScores = numberOfScores;
-        this.averageScore = averageScore;
-    }
 }
