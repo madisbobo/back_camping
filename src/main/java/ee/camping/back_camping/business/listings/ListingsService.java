@@ -5,7 +5,6 @@ import ee.camping.back_camping.domain.listing.image.Image;
 import ee.camping.back_camping.domain.listing.image.ImageMapper;
 import ee.camping.back_camping.domain.listing.image.ImageService;
 import ee.camping.back_camping.domain.review.ScoreInfo;
-import ee.camping.back_camping.domain.review.ReviewMapper;
 import ee.camping.back_camping.domain.review.ReviewService;
 import ee.camping.back_camping.util.ImageUtil;
 import jakarta.annotation.Resource;
@@ -28,8 +27,6 @@ public class ListingsService {
     @Resource
     private ImageMapper imageMapper;
 
-    @Resource
-    private ReviewMapper reviewMapper;
 
     public List<ListingPreviewDto> findMyListingsPreview(Integer userId) {
         List<Listing> myListings = listingService.findMyListings(userId);

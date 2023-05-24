@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
-public class ReviewMapperImpl implements ReviewMapper {
+public class ReviewMapperImpl {
 
     @Override
     public RatingDto toRatingDto(Review review) {
