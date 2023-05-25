@@ -14,16 +14,16 @@ public class ListingsController {
     private ListingsService listingsService;
 
     @GetMapping("/my-listings")
-    @Operation(summary = "Tagastab userId järgi kasutaja telkimisplatsi nime, pildi ja reitingu")
+    @Operation(summary = "Tagastab userId järgi kasutaja telkimisplatsi preview andmed (nime, pildi, hinna, keskmise skoori ja skooride arvu)")
     public List<ListingPreviewDto> findMyListingsPreview(@RequestParam Integer userId) {
         return listingsService.findMyListingsPreview(userId);
 
     }
 
     @GetMapping("/listings")
-    @Operation(summary = "Tagastab userId järgi kasutaja telkimisplatsi nime, pildi ja reitingu")
-    public List<ListingPreviewDto> findMyListingsPreview(@RequestParam Integer userId) {
-        return listingsService.findMyListingsPreview(userId);
+    @Operation(summary = "Tagastab kõikide telkimisplatside preview andmed (nime, pildi, hinna, keskmise skoori ja skooride arvu)")
+    public List<ListingPreviewDto> findAllActiveListingsPreview() {
+        return listingsService.findAllActiveListingsPreview();
 
     }
 

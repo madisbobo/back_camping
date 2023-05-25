@@ -1,5 +1,6 @@
 package ee.camping.back_camping.business.listings;
 
+import ee.camping.back_camping.business.Status;
 import ee.camping.back_camping.domain.listing.*;
 import ee.camping.back_camping.domain.listing.image.Image;
 import ee.camping.back_camping.domain.listing.image.ImageMapper;
@@ -40,6 +41,14 @@ public class ListingsService {
         return listingPreviewDtos;
     }
 
+    public List<ListingPreviewDto> findAllActiveListingsPreview() {
+        List<Listing> allActiveListings = listingService.findAllActiveListings(Status.ACTIVE.getLetter());
+        List<ListingPreviewDto> listingPreviewDtos = listingMapper.toListingPreviewDtos(allActiveListings);
+        addListingImages(listingPreviewDtos);
+        addRatings(listingPreviewDtos);
+        return listingPreviewDtos;
+    }
+
 
     private void addListingImages(List<ListingPreviewDto> listingPreviewDtos) {
         for (ListingPreviewDto listingPreviewDto : listingPreviewDtos) {
@@ -60,4 +69,6 @@ public class ListingsService {
             }
         }
     }
+
+
 }

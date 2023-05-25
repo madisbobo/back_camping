@@ -1,5 +1,6 @@
 package ee.camping.back_camping.domain.listing;
 
+import ee.camping.back_camping.business.Status;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,9 @@ public class ListingService {
 
     public List<Listing> findMyListings(Integer userId) {
         return listingRepository.findListingsBy(userId);
+    }
+
+    public List<Listing> findAllActiveListings(String status) {
+        return listingRepository.findAllListingsBy(status);
     }
 }
