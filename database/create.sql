@@ -55,9 +55,9 @@ CREATE TABLE listing (
     owner_user_id int  NOT NULL,
     location_id int  NULL,
     name varchar(255)  NOT NULL,
-    description varchar(500)  NOT NULL,
+    description varchar(500)  NULL,
     additional_info varchar(500)  NULL,
-    price int  NOT NULL,
+    price int  NULL,
     status char(1)  NOT NULL,
     CONSTRAINT listing_ak_1 UNIQUE (name) NOT DEFERRABLE  INITIALLY IMMEDIATE,
     CONSTRAINT listing_pk PRIMARY KEY (id)

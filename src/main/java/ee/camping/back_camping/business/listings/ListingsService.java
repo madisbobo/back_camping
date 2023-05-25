@@ -7,6 +7,7 @@ import ee.camping.back_camping.domain.listing.image.ImageService;
 import ee.camping.back_camping.domain.review.ScoreInfo;
 import ee.camping.back_camping.domain.review.ReviewService;
 import ee.camping.back_camping.util.ImageUtil;
+import ee.camping.back_camping.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +28,12 @@ public class ListingsService {
     @Resource
     private ImageMapper imageMapper;
 
+    @Resource
+    private ValidationService validationService;
+
 
     public List<ListingPreviewDto> findMyListingsPreview(Integer userId) {
         List<Listing> myListings = listingService.findMyListings(userId);
-        // TODO: võib-olla tuleb siia teha if myListing.empty(), siis sõnum
-
         List<ListingPreviewDto> listingPreviewDtos = listingMapper.toListingPreviewDtos(myListings);
         addListingImages(listingPreviewDtos);
         addRatings(listingPreviewDtos);
@@ -49,12 +51,13 @@ public class ListingsService {
 
     private void addRatings(List<ListingPreviewDto> listingPreviewDtos) {
         for (ListingPreviewDto listingPreviewDto : listingPreviewDtos) {
-            ScoreInfo reviewInfo = reviewService.findReviewInfo(listingPreviewDto.getListingId());
-            listingPreviewDto.setNumberOfScores(reviewInfo.getNumberOfScores());
-            listingPreviewDto.setAverageScore(reviewInfo.getAverageScore());
-            System.out.println();
-
-
+            ScoreInfo scoreInfo = reviewService.findScoreInfo(listingPreviewDto.getListingId());
+            listingPreviewDto.setNumberOfScores(scoreInfo.getNumberOfScores());
+            if (scoreInfo.getAverageScore() == null) {
+                listingPreviewDto.setAverageScore(0.0);
+            } else {
+                listingPreviewDto.setAverageScore(Math.round(scoreInfo.getAverageScore() * 10.0) / 10.0);
+            }
         }
     }
 }

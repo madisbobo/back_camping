@@ -19,4 +19,13 @@ public class ListingsController {
         return listingsService.findMyListingsPreview(userId);
 
     }
+
+    @GetMapping("/listings")
+    @Operation(summary = "Tagastab userId järgi kasutaja telkimisplatsi nime, pildi ja reitingu")
+    public List<ListingPreviewDto> findMyListingsPreview(@RequestParam Integer userId) {
+        return listingsService.findMyListingsPreview(userId);
+
+    }
+
+
 }
