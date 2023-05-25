@@ -1,11 +1,9 @@
 package ee.camping.back_camping.validation;
 
-import ee.camping.back_camping.domain.listing.Listing;
 import ee.camping.back_camping.domain.user.User;
 import ee.camping.back_camping.infrastructure.exception.BusinessException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,4 +21,9 @@ public class ValidationService {
         }
     }
 
+    public static void validateListingNameAvailability(boolean listingExists) {
+        if (listingExists) {
+            throw new BusinessException(Error.LISTING_NAME_UNAVAILABLE.getMessage(), Error.LISTING_NAME_UNAVAILABLE.getErrorCode());
+        }
+    }
 }

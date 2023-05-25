@@ -14,4 +14,6 @@ public interface ListingRepository extends JpaRepository<Listing, Integer> {
     List<Listing> findAllListingsBy(String status);
 
 
+    @Query("select (count(l) > 0) from Listing l where l.name = ?1")
+    boolean listingExistsBy(String name);
 }

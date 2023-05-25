@@ -7,6 +7,8 @@ import ee.camping.back_camping.domain.listing.image.ImageMapper;
 import ee.camping.back_camping.domain.listing.image.ImageService;
 import ee.camping.back_camping.domain.review.ScoreInfo;
 import ee.camping.back_camping.domain.review.ReviewService;
+import ee.camping.back_camping.domain.user.User;
+import ee.camping.back_camping.domain.user.UserService;
 import ee.camping.back_camping.util.ImageUtil;
 import ee.camping.back_camping.validation.ValidationService;
 import jakarta.annotation.Resource;
@@ -28,6 +30,9 @@ public class ListingsService {
 
     @Resource
     private ImageMapper imageMapper;
+
+    @Resource
+    private UserService userService;
 
     @Resource
     private ValidationService validationService;
@@ -68,6 +73,16 @@ public class ListingsService {
                 listingPreviewDto.setAverageScore(Math.round(scoreInfo.getAverageScore() * 10.0) / 10.0);
             }
         }
+    }
+
+
+    public AddListingResponseDto addListing(NewListingDto newListingDto) {
+        listingService.validateIfListingNameIsAvailable(newListingDto.getListingName());
+        Listing listing = listingMapper.toListing(newListingDto);
+        User user = userService.findUserBy(newListingDto.getOwnerUserId());
+        listing.setOwnerUser(user);
+        listingService.addListing(listing);
+        return listingMapper.toAddListingResponseDto(listing);
     }
 
 

@@ -33,16 +33,14 @@ public class Listing {
     private String name;
 
     @Size(max = 500)
-    @NotNull
-    @Column(name = "description", nullable = false, length = 500)
+    @Column(name = "description", length = 500)
     private String description;
 
     @Size(max = 500)
     @Column(name = "additional_info", length = 500)
     private String additionalInfo;
 
-    @NotNull
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private Integer price;
 
     @Size(max = 1)
