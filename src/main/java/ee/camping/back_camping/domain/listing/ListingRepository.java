@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ListingRepository extends JpaRepository<Listing, Integer> {
 
@@ -16,4 +17,5 @@ public interface ListingRepository extends JpaRepository<Listing, Integer> {
 
     @Query("select (count(l) > 0) from Listing l where l.name = ?1")
     boolean listingExistsBy(String name);
+
 }

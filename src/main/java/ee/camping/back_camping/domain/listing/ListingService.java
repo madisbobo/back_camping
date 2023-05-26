@@ -1,6 +1,5 @@
 package ee.camping.back_camping.domain.listing;
 
-import ee.camping.back_camping.business.Status;
 import ee.camping.back_camping.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -31,5 +30,10 @@ public class ListingService {
 
     public void addListing(Listing listing) {
         listingRepository.save(listing);
+    }
+
+    public Listing getListingBy(Integer listingId) {
+        return listingRepository.findById(listingId).get();
+
     }
 }

@@ -86,4 +86,8 @@ public class ListingsService {
     }
 
 
+    public void getListing(Integer listingId) {
+        Listing listing = listingService.getListingBy(listingId);
+        listingMapper.toListingFull(listing);
+    }
 }

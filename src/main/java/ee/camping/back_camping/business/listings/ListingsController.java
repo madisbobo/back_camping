@@ -39,6 +39,11 @@ public class ListingsController {
 
     }
 
+    @GetMapping("/listing")
+    @Operation(summary = "Tagastab kogu info ühe konkreetse listingu kohta", description = "Anname listingId ja tagastame antud listing kõik andmed")
+    public void getListing(@RequestParam Integer listingId) {
+        listingsService.getListing(listingId);
+    }
 
 
 
