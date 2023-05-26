@@ -1,4 +1,4 @@
-package ee.camping.back_camping.business.listings;
+package ee.camping.back_camping.business.Dtos;
 
 import lombok.Data;
 

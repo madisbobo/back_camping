@@ -1,6 +1,8 @@
 package ee.camping.back_camping.business.users;
 
-import ee.camping.back_camping.business.login.LoginResponseDto;
+import ee.camping.back_camping.business.Dtos.ContactDto;
+import ee.camping.back_camping.business.Dtos.LoginResponseDto;
+import ee.camping.back_camping.business.Dtos.NewUserDto;
 import ee.camping.back_camping.domain.user.User;
 import ee.camping.back_camping.domain.user.UserMapper;
 import ee.camping.back_camping.domain.user.UserService;

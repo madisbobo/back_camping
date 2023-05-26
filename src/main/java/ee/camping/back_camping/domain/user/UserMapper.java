@@ -1,8 +1,8 @@
 package ee.camping.back_camping.domain.user;
 
 import ee.camping.back_camping.business.Status;
-import ee.camping.back_camping.business.login.LoginResponseDto;
-import ee.camping.back_camping.business.users.NewUserDto;
+import ee.camping.back_camping.business.Dtos.LoginResponseDto;
+import ee.camping.back_camping.business.Dtos.NewUserDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, imports = {Status.class})

@@ -1,9 +1,9 @@
 package ee.camping.back_camping.domain.listing;
 
 import ee.camping.back_camping.business.Status;
-import ee.camping.back_camping.business.listings.AddListingResponseDto;
-import ee.camping.back_camping.business.listings.ListingPreviewDto;
-import ee.camping.back_camping.business.listings.NewListingDto;
+import ee.camping.back_camping.business.Dtos.AddListingResponseDto;
+import ee.camping.back_camping.business.Dtos.ListingPreviewDto;
+import ee.camping.back_camping.business.Dtos.NewListingDto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;

@@ -1,6 +1,6 @@
 package ee.camping.back_camping.domain.user.contact;
 
-import ee.camping.back_camping.business.users.ContactDto;
+import ee.camping.back_camping.business.Dtos.ContactDto;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 

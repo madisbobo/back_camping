@@ -1,4 +1,4 @@
-package ee.camping.back_camping.business.users;
+package ee.camping.back_camping.business.Dtos;
 
 import ee.camping.back_camping.domain.user.contact.Contact;
 import jakarta.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package ee.camping.back_camping.business.login;
+package ee.camping.back_camping.business.Dtos;
 
 import ee.camping.back_camping.domain.user.User;
 import jakarta.validation.constraints.NotNull;
@@ -11,9 +11,11 @@ import java.io.Serializable;
  * A DTO for the {@link User} entity
  */
 @Data
-public class LoginResponseDto implements Serializable {
-    private final Integer userId;
+public class NewUserDto implements Serializable {
     @Size(max = 255)
     @NotNull
-    private final String roleName;
+    private String username;
+    @Size(max = 255)
+    @NotNull
+    private String password;
 }

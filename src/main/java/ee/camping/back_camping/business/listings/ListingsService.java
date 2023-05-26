@@ -1,8 +1,13 @@
 package ee.camping.back_camping.business.listings;
 
+import ee.camping.back_camping.business.Dtos.AddListingResponseDto;
+import ee.camping.back_camping.business.Dtos.ListingFullDto;
+import ee.camping.back_camping.business.Dtos.ListingPreviewDto;
+import ee.camping.back_camping.business.Dtos.NewListingDto;
 import ee.camping.back_camping.business.Status;
 import ee.camping.back_camping.domain.listing.*;
 import ee.camping.back_camping.domain.listing.image.Image;
+import ee.camping.back_camping.domain.listing.image.ImageDto;
 import ee.camping.back_camping.domain.listing.image.ImageMapper;
 import ee.camping.back_camping.domain.listing.image.ImageService;
 import ee.camping.back_camping.domain.review.ScoreInfo;
@@ -38,6 +43,15 @@ public class ListingsService {
     private ValidationService validationService;
 
 
+    public AddListingResponseDto addListing(NewListingDto newListingDto) {
+        listingService.validateIfListingNameIsAvailable(newListingDto.getListingName());
+        Listing listing = listingMapper.toListing(newListingDto);
+        User user = userService.findUserBy(newListingDto.getOwnerUserId());
+        listing.setOwnerUser(user);
+        listingService.addListing(listing);
+        return listingMapper.toAddListingResponseDto(listing);
+    }
+
     public List<ListingPreviewDto> findMyListingsPreview(Integer userId) {
         List<Listing> myListings = listingService.findMyListings(userId);
         List<ListingPreviewDto> listingPreviewDtos = listingMapper.toListingPreviewDtos(myListings);
@@ -55,11 +69,38 @@ public class ListingsService {
     }
 
 
+    public void getListing(Integer listingId) {
+        Listing listing = listingService.getListingBy(listingId);
+        ListingFullDto listingFullDto = listingMapper.tolistingFullDto(listing);
+        addRating(listingId, listingFullDto);
+
+        // Add Images
+        List<Image> images = imageService.findImagesBy(listingId);
+        imageMapper.toImagesData(images);
+
+        // Add Features
+
+
+    }
+
+
+
+
     private void addListingImages(List<ListingPreviewDto> listingPreviewDtos) {
         for (ListingPreviewDto listingPreviewDto : listingPreviewDtos) {
             Image coverImage = imageService.findCoverImagesBy(listingPreviewDto.getListingId());
             String imageData = ImageUtil.byteArrayToBase64ImageData(coverImage.getData());
             listingPreviewDto.setImageData(imageData);
+        }
+    }
+
+    private void addRating(Integer listingId, ListingFullDto listingFullDto) {
+        ScoreInfo scoreInfo = reviewService.findScoreInfo(listingId);
+        listingFullDto.setNumberOfScores(scoreInfo.getNumberOfScores());
+        if (scoreInfo.getAverageScore() == null) {
+            listingFullDto.setAverageScore(0.0);
+        } else {
+            listingFullDto.setAverageScore(scoreInfo.getAverageScore() * 10 / 10.0);
         }
     }
 
@@ -76,18 +117,7 @@ public class ListingsService {
     }
 
 
-    public AddListingResponseDto addListing(NewListingDto newListingDto) {
-        listingService.validateIfListingNameIsAvailable(newListingDto.getListingName());
-        Listing listing = listingMapper.toListing(newListingDto);
-        User user = userService.findUserBy(newListingDto.getOwnerUserId());
-        listing.setOwnerUser(user);
-        listingService.addListing(listing);
-        return listingMapper.toAddListingResponseDto(listing);
-    }
 
 
-    public void getListing(Integer listingId) {
-        Listing listing = listingService.getListingBy(listingId);
-        listingMapper.toListingFull(listing);
-    }
+
 }
