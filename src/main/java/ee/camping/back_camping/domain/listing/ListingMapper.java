@@ -26,7 +26,7 @@ public interface ListingMapper {
     @Mapping(source = "location.address", target = "locationAddress")
     @Mapping(source = "location.longitude", target = "locationLongitude")
     @Mapping(source = "location.latitude", target = "locationLatitude")
-    @Mapping(source = "ownerUser.id", target = "owner_id")
+    @Mapping(source = "ownerUser.id", target = "ownerId")
     ListingFullDto tolistingFullDto(Listing listing);
 
     @Mapping(source = "listingName", target = "name")

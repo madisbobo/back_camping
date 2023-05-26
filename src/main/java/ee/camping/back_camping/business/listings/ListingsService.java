@@ -1,24 +1,27 @@
 package ee.camping.back_camping.business.listings;
 
-import ee.camping.back_camping.business.Dtos.AddListingResponseDto;
-import ee.camping.back_camping.business.Dtos.ListingFullDto;
-import ee.camping.back_camping.business.Dtos.ListingPreviewDto;
-import ee.camping.back_camping.business.Dtos.NewListingDto;
+import ee.camping.back_camping.business.Dtos.*;
 import ee.camping.back_camping.business.Status;
 import ee.camping.back_camping.domain.listing.*;
+import ee.camping.back_camping.domain.listing.feature.ListingFeature;
+import ee.camping.back_camping.domain.listing.feature.ListingFeatureMapper;
+import ee.camping.back_camping.domain.listing.feature.ListingFeatureService;
 import ee.camping.back_camping.domain.listing.image.Image;
-import ee.camping.back_camping.domain.listing.image.ImageDto;
 import ee.camping.back_camping.domain.listing.image.ImageMapper;
 import ee.camping.back_camping.domain.listing.image.ImageService;
 import ee.camping.back_camping.domain.review.ScoreInfo;
 import ee.camping.back_camping.domain.review.ReviewService;
 import ee.camping.back_camping.domain.user.User;
 import ee.camping.back_camping.domain.user.UserService;
+import ee.camping.back_camping.domain.user.contact.Contact;
+import ee.camping.back_camping.domain.user.contact.ContactMapper;
+import ee.camping.back_camping.domain.user.contact.ContactService;
 import ee.camping.back_camping.util.ImageUtil;
 import ee.camping.back_camping.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,6 +44,18 @@ public class ListingsService {
 
     @Resource
     private ValidationService validationService;
+
+    @Resource
+    private ListingFeatureService listingFeatureService;
+
+    @Resource
+    private ListingFeatureMapper listingFeatureMapper;
+
+    @Resource
+    private ContactService contactService;
+
+    @Resource
+    private ContactMapper contactMapper;
 
 
     public AddListingResponseDto addListing(NewListingDto newListingDto) {
@@ -69,21 +84,40 @@ public class ListingsService {
     }
 
 
-    public void getListing(Integer listingId) {
+    public ListingFullDto getListing(Integer listingId) {
         Listing listing = listingService.getListingBy(listingId);
         ListingFullDto listingFullDto = listingMapper.tolistingFullDto(listing);
+
+        Contact contact = contactService.getUserContactBy(listing.getOwnerUser().getId());
+        ContactDto contactDto = contactMapper.toContactDto(contact);
+        listingFullDto.setContact(contactDto);
+
         addRating(listingId, listingFullDto);
-
-        // Add Images
-        List<Image> images = imageService.findImagesBy(listingId);
-        imageMapper.toImagesData(images);
-
-        // Add Features
+        addImages(listingId, listingFullDto);
+        addFeatures(listingId, listingFullDto);
+        return listingFullDto;
 
 
     }
 
 
+
+    // ************** PRIVATE METHODS ************** //
+    private void addFeatures(Integer listingId, ListingFullDto listingFullDto) {
+        List<ListingFeature> listingFeatures = listingFeatureService.findListingFeaturesBy(listingId);
+        List<FeatureDto> featureDtos = listingFeatureMapper.toFeatureDtos(listingFeatures);
+        listingFullDto.setFeatures(featureDtos);
+    }
+
+    private void addImages(Integer listingId, ListingFullDto listingFullDto) {
+        List<Image> images = imageService.findImagesBy(listingId);
+        List<String> imagesData = new ArrayList<>();
+        for (Image image : images) {
+            String imageData = ImageUtil.byteArrayToBase64ImageData(image.getData());
+            imagesData.add(imageData);
+        }
+        listingFullDto.setImagesData(imagesData);
+    }
 
 
     private void addListingImages(List<ListingPreviewDto> listingPreviewDtos) {
@@ -117,7 +151,7 @@ public class ListingsService {
     }
 
 
-
-
-
+    public void deleteListing(Integer listingId) {
+        listingService.deleteListing(listingId);
+    }
 }

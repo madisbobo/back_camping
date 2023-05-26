@@ -30,7 +30,8 @@ public class ListingFullDto implements Serializable {
     private BigDecimal locationLongitude;
     private BigDecimal locationLatitude;
 
-    private String owner_id;
+    private String ownerId;
+    private ContactDto contact;
     private Integer price;
 
 

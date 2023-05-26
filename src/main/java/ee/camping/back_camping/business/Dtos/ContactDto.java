@@ -17,16 +17,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ContactDto implements Serializable {
     private Integer userId;
-    @Size(max = 255)
-    @NotNull
     private String firstName;
-    @Size(max = 255)
-    @NotNull
     private String lastName;
-    @Size(max = 255)
-    @NotNull
     private String email;
-    @Size(max = 15)
     private String phoneNo;
     private String imageData;
 }

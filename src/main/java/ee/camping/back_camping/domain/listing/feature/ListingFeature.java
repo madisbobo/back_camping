@@ -22,6 +22,11 @@ public class ListingFeature {
     private Listing listing;
 
     @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "feature_id", nullable = false)
+    private Feature feature;
+
+    @NotNull
     @Column(name = "is_selected", nullable = false)
     private Boolean isSelected = false;
 

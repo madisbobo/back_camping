@@ -36,4 +36,8 @@ public class ListingService {
         return listingRepository.findById(listingId).get();
 
     }
+
+    public void deleteListing(Integer listingId) {
+        listingRepository.deleteById(listingId);
+    }
 }

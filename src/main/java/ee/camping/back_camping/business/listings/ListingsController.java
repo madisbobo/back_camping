@@ -1,6 +1,7 @@
 package ee.camping.back_camping.business.listings;
 
 import ee.camping.back_camping.business.Dtos.AddListingResponseDto;
+import ee.camping.back_camping.business.Dtos.ListingFullDto;
 import ee.camping.back_camping.business.Dtos.ListingPreviewDto;
 import ee.camping.back_camping.business.Dtos.NewListingDto;
 import ee.camping.back_camping.infrastructure.error.ApiError;
@@ -35,6 +36,12 @@ public class ListingsController {
         return listingsService.addListing(newListingDto);
     }
 
+    @DeleteMapping("/add-listing")
+    @Operation(summary = "Pooleli oleva listingu kustutamine", description = "Anname kaasa listingId ja kustutame listingu")
+    public void deleteListing(@RequestParam Integer listingId) {
+        listingsService.deleteListing(listingId);
+    }
+
     @GetMapping("/listings")
     @Operation(summary = "Tagastab kõikide telkimisplatside preview andmed (nime, pildi, hinna, keskmise skoori ja skooride arvu)")
     public List<ListingPreviewDto> findAllActiveListingsPreview() {
@@ -44,9 +51,11 @@ public class ListingsController {
 
     @GetMapping("/listing")
     @Operation(summary = "Tagastab kogu info ühe konkreetse listingu kohta", description = "Anname listingId ja tagastame antud listing kõik andmed")
-    public void getListing(@RequestParam Integer listingId) {
-        listingsService.getListing(listingId);
+    public ListingFullDto getListing(@RequestParam Integer listingId) {
+        return listingsService.getListing(listingId);
     }
+
+
 
 
 
