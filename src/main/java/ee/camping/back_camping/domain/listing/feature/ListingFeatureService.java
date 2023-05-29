@@ -16,4 +16,8 @@ public class ListingFeatureService {
     public List<ListingFeature> findListingFeaturesBy(Integer listingId) {
         return listingFeatureRepository.findAllBy(listingId);
     }
+
+    public void saveListingFeatures(List<ListingFeature> listingFeatures) {
+        listingFeatureRepository.saveAll(listingFeatures);
+    }
 }

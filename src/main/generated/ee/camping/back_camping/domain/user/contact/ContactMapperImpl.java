@@ -1,12 +1,12 @@
 package ee.camping.back_camping.domain.user.contact;
 
-import ee.camping.back_camping.business.Dtos.ContactDto;
+import ee.camping.back_camping.business.dto.ContactDto;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-26T14:16:05+0300",
+    date = "2023-05-29T16:22:22+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component

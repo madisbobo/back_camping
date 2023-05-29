@@ -1,10 +1,9 @@
 package ee.camping.back_camping.domain.listing;
 
-import ee.camping.back_camping.business.Dtos.*;
+import ee.camping.back_camping.business.dto.*;
 import ee.camping.back_camping.business.Status;
 import org.mapstruct.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, imports = {Status.class})
@@ -34,4 +33,8 @@ public interface ListingMapper {
     Listing toListing(NewListingDto newListingDto);
 
 
+    @Mapping(source = "listingName", target = "name")
+    @Mapping(source = "listingId", target = "id")
+    @Mapping(expression = "java(Status.ACTIVE.getLetter())", target = "status")
+    Listing toFullListing(AddFullListingDto addFullListingDto);
 }

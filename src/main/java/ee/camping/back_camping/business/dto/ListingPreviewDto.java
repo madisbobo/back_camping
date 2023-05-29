@@ -1,4 +1,4 @@
-package ee.camping.back_camping.business.Dtos;
+package ee.camping.back_camping.business.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package ee.camping.back_camping.domain.listing.image;
 
+import ee.camping.back_camping.business.dto.ImageDto;
 import ee.camping.back_camping.util.ImageUtil;
 import org.mapstruct.*;
 
@@ -13,12 +14,21 @@ public interface ImageMapper {
     List<ImageDto> toImagesDto(List<Image> listingImages);
 
 
+
     @Named("imageToImageData")
     static String imageToImageData(byte[] data) {
         if (data == null) {
             return "";
         }
         return ImageUtil.byteArrayToBase64ImageData(data);
+    }
+
+    @Named("imageDataToImage")
+    static byte[] imageDataToImage(String imageData) {
+        if (imageData == null) {
+            return null;
+        }
+        return ImageUtil.base64ImageDataToByteArray(imageData);
     }
 
 

@@ -1,5 +1,6 @@
-package ee.camping.back_camping.domain.listing.image;
+package ee.camping.back_camping.business.dto;
 
+import ee.camping.back_camping.domain.listing.image.Image;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

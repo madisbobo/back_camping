@@ -1,6 +1,6 @@
 package ee.camping.back_camping.domain.user.contact;
 
-import ee.camping.back_camping.business.Dtos.ContactDto;
+import ee.camping.back_camping.business.dto.ContactDto;
 import ee.camping.back_camping.util.ImageUtil;
 import org.mapstruct.*;
 

@@ -1,8 +1,8 @@
 package ee.camping.back_camping.business.users;
 
-import ee.camping.back_camping.business.Dtos.ContactDto;
-import ee.camping.back_camping.business.Dtos.LoginResponseDto;
-import ee.camping.back_camping.business.Dtos.NewUserDto;
+import ee.camping.back_camping.business.dto.ContactDto;
+import ee.camping.back_camping.business.dto.LoginResponseDto;
+import ee.camping.back_camping.business.dto.NewUserDto;
 import ee.camping.back_camping.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

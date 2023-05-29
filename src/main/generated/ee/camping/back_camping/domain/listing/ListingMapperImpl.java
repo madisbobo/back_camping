@@ -1,10 +1,11 @@
 package ee.camping.back_camping.domain.listing;
 
-import ee.camping.back_camping.business.Dtos.AddListingResponseDto;
-import ee.camping.back_camping.business.Dtos.ListingFullDto;
-import ee.camping.back_camping.business.Dtos.ListingPreviewDto;
-import ee.camping.back_camping.business.Dtos.NewListingDto;
 import ee.camping.back_camping.business.Status;
+import ee.camping.back_camping.business.dto.AddFullListingDto;
+import ee.camping.back_camping.business.dto.AddListingResponseDto;
+import ee.camping.back_camping.business.dto.ListingFullDto;
+import ee.camping.back_camping.business.dto.ListingPreviewDto;
+import ee.camping.back_camping.business.dto.NewListingDto;
 import ee.camping.back_camping.domain.listing.location.County;
 import ee.camping.back_camping.domain.listing.location.Location;
 import ee.camping.back_camping.domain.user.User;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-26T16:33:44+0300",
+    date = "2023-05-29T16:22:22+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -97,6 +98,25 @@ public class ListingMapperImpl implements ListingMapper {
         Listing listing = new Listing();
 
         listing.setName( newListingDto.getListingName() );
+
+        listing.setStatus( Status.ACTIVE.getLetter() );
+
+        return listing;
+    }
+
+    @Override
+    public Listing toFullListing(AddFullListingDto addFullListingDto) {
+        if ( addFullListingDto == null ) {
+            return null;
+        }
+
+        Listing listing = new Listing();
+
+        listing.setName( addFullListingDto.getListingName() );
+        listing.setId( addFullListingDto.getListingId() );
+        listing.setDescription( addFullListingDto.getDescription() );
+        listing.setAdditionalInfo( addFullListingDto.getAdditionalInfo() );
+        listing.setPrice( addFullListingDto.getPrice() );
 
         listing.setStatus( Status.ACTIVE.getLetter() );
 

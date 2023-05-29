@@ -1,6 +1,6 @@
 package ee.camping.back_camping.domain.listing.feature;
 
-import ee.camping.back_camping.business.Dtos.FeatureDto;
+import ee.camping.back_camping.business.dto.FeatureDto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-26T14:29:04+0300",
+    date = "2023-05-29T16:22:22+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -41,6 +41,20 @@ public class ListingFeatureMapperImpl implements ListingFeatureMapper {
         }
 
         return list;
+    }
+
+    @Override
+    public ListingFeature toListingFeature(FeatureDto featureDto) {
+        if ( featureDto == null ) {
+            return null;
+        }
+
+        ListingFeature listingFeature = new ListingFeature();
+
+        listingFeature.setId( featureDto.getFeatureId() );
+        listingFeature.setIsSelected( featureDto.getFeatureIsSelected() );
+
+        return listingFeature;
     }
 
     private String listingFeatureFeatureName(ListingFeature listingFeature) {

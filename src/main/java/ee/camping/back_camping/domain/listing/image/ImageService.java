@@ -20,4 +20,8 @@ public class ImageService {
         return imageRepository.findImagesBy(listingId);
 
     }
+
+    public void saveImages(List<Image> images) {
+        imageRepository.saveAll(images);
+    }
 }

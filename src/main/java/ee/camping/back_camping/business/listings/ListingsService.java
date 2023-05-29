@@ -1,14 +1,13 @@
 package ee.camping.back_camping.business.listings;
 
-import ee.camping.back_camping.business.Dtos.*;
+import ee.camping.back_camping.business.dto.*;
 import ee.camping.back_camping.business.Status;
 import ee.camping.back_camping.domain.listing.*;
-import ee.camping.back_camping.domain.listing.feature.ListingFeature;
-import ee.camping.back_camping.domain.listing.feature.ListingFeatureMapper;
-import ee.camping.back_camping.domain.listing.feature.ListingFeatureService;
+import ee.camping.back_camping.domain.listing.feature.*;
 import ee.camping.back_camping.domain.listing.image.Image;
 import ee.camping.back_camping.domain.listing.image.ImageMapper;
 import ee.camping.back_camping.domain.listing.image.ImageService;
+import ee.camping.back_camping.domain.listing.location.*;
 import ee.camping.back_camping.domain.review.ScoreInfo;
 import ee.camping.back_camping.domain.review.ReviewService;
 import ee.camping.back_camping.domain.user.User;
@@ -57,13 +56,26 @@ public class ListingsService {
     @Resource
     private ContactMapper contactMapper;
 
+    @Resource
+    private LocationMapper locationMapper;
+
+    @Resource
+    private CountyService countyService;
+
+    @Resource
+    private FeatureService featureService;
+
+    @Resource
+    private LocationService locationService;
+
+
 
     public AddListingResponseDto addListing(NewListingDto newListingDto) {
         listingService.validateIfListingNameIsAvailable(newListingDto.getListingName());
         Listing listing = listingMapper.toListing(newListingDto);
         User user = userService.findUserBy(newListingDto.getOwnerUserId());
         listing.setOwnerUser(user);
-        listingService.addListing(listing);
+        listingService.saveListing(listing);
         return listingMapper.toAddListingResponseDto(listing);
     }
 
@@ -99,6 +111,70 @@ public class ListingsService {
 
 
     }
+
+    public void addFullListing(AddFullListingDto addFullListingDto) {
+        Listing listing = listingMapper.toFullListing(addFullListingDto);
+
+        // Find and set user to listing
+        User user = userService.findUserBy(addFullListingDto.getOwnerUserId());
+        listing.setOwnerUser(user);
+
+        // Find, save and set location to listing
+        Location location = locationMapper.toLocation(addFullListingDto);
+        County county = countyService.getCountyBy(addFullListingDto.getLocationCountyId());
+        location.setCounty(county);
+        locationService.saveLocation(location);
+        listing.setLocation(location);
+
+        // save/write over the existing listing in the database
+        listingService.saveListing(listing);
+
+        // Create listing feature object, put relevant data into it and save it to the db
+        List<ListingFeature> listingFeatures = createListingFeatures(addFullListingDto, listing);
+        listingFeatureService.saveListingFeatures(listingFeatures);
+
+        // Create image object, put images into it and save it to the db
+        List<Image> images = createImages(addFullListingDto, listing);
+        imageService.saveImages(images);
+
+    }
+
+    private List<Image> createImages(AddFullListingDto addFullListingDto, Listing listing) {
+        List<Image> images = new ArrayList<>();
+        for (String imageData : addFullListingDto.getImagesData()) {
+            Image image = new Image();
+            byte[] data = ImageUtil.base64ImageDataToByteArray(imageData);
+            image.setData(data);
+            image.setListing(listing);
+            images.add(image);
+        }
+        return images;
+    }
+
+    private List<ListingFeature> createListingFeatures(AddFullListingDto addFullListingDto, Listing listing) {
+        // Set features
+        List<ListingFeature> listingFeatures = new ArrayList<>();
+        for (FeatureDto featureDto : addFullListingDto.getFeatures()) {
+            ListingFeature listingFeature = listingFeatureMapper.toListingFeature(featureDto);
+            // find and set feature to listing_feature
+            Feature feature = featureService.getFeatureby(featureDto.getFeatureId());
+            listingFeature.setFeature(feature);
+
+            // set listing to listing_feature
+            listingFeature.setListing(listing);
+
+            // add listingFeature to listingFeatures
+            listingFeatures.add(listingFeature);
+
+        }
+        return listingFeatures;
+    }
+
+    public void deleteListing(Integer listingId) {
+        listingService.deleteListing(listingId);
+    }
+
+
 
 
 
@@ -151,7 +227,5 @@ public class ListingsService {
     }
 
 
-    public void deleteListing(Integer listingId) {
-        listingService.deleteListing(listingId);
-    }
+
 }

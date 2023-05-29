@@ -28,7 +28,7 @@ public class ListingService {
         ValidationService.validateListingNameAvailability(listingExists);
     }
 
-    public void addListing(Listing listing) {
+    public void saveListing(Listing listing) {
         listingRepository.save(listing);
     }
 

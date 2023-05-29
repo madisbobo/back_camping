@@ -1,6 +1,6 @@
 package ee.camping.back_camping.business.login;
 
-import ee.camping.back_camping.business.Dtos.LoginResponseDto;
+import ee.camping.back_camping.business.dto.LoginResponseDto;
 import ee.camping.back_camping.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

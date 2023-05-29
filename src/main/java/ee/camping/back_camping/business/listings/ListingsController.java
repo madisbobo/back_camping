@@ -1,9 +1,6 @@
 package ee.camping.back_camping.business.listings;
 
-import ee.camping.back_camping.business.Dtos.AddListingResponseDto;
-import ee.camping.back_camping.business.Dtos.ListingFullDto;
-import ee.camping.back_camping.business.Dtos.ListingPreviewDto;
-import ee.camping.back_camping.business.Dtos.NewListingDto;
+import ee.camping.back_camping.business.dto.*;
 import ee.camping.back_camping.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,6 +32,13 @@ public class ListingsController {
     public AddListingResponseDto addListing(@RequestBody NewListingDto newListingDto) {
         return listingsService.addListing(newListingDto);
     }
+
+    @PostMapping("/add-listing")
+    @Operation(summary = "Lisab uue telkimisplatsi täisinfo")
+    public void addFullListing(@RequestBody AddFullListingDto addFullListingDto) {
+        listingsService.addFullListing(addFullListingDto);
+    }
+
 
     @DeleteMapping("/add-listing")
     @Operation(summary = "Pooleli oleva listingu kustutamine", description = "Anname kaasa listingId ja kustutame listingu")
