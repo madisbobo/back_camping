@@ -155,10 +155,13 @@ public class ListingsService {
         // Set features
         List<ListingFeature> listingFeatures = new ArrayList<>();
         for (FeatureDto featureDto : addFullListingDto.getFeatures()) {
-            ListingFeature listingFeature = listingFeatureMapper.toListingFeature(featureDto);
+
+            ListingFeature listingFeature = new ListingFeature();
+
             // find and set feature to listing_feature
             Feature feature = featureService.getFeatureby(featureDto.getFeatureId());
             listingFeature.setFeature(feature);
+            listingFeature.setIsSelected(featureDto.getFeatureIsSelected());
 
             // set listing to listing_feature
             listingFeature.setListing(listing);
