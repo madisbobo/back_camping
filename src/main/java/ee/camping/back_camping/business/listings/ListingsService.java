@@ -80,7 +80,7 @@ public class ListingsService {
     }
 
     public List<ListingPreviewDto> findMyListingsPreview(Integer userId) {
-        List<Listing> myListings = listingService.findMyListings(userId);
+        List<Listing> myListings = listingService.findMyListings(userId, Status.ACTIVE.getLetter());
         List<ListingPreviewDto> listingPreviewDtos = listingMapper.toListingPreviewDtos(myListings);
         addListingImages(listingPreviewDtos);
         addRatings(listingPreviewDtos);
@@ -227,6 +227,13 @@ public class ListingsService {
                 listingPreviewDto.setAverageScore(Math.round(scoreInfo.getAverageScore() * 10.0) / 10.0);
             }
         }
+    }
+
+
+    public void deactivateListing(Integer listingId) {
+        Listing listing = listingService.getListingBy(listingId);
+        listing.setStatus(Status.DELETED.getLetter());
+        listingService.saveListing(listing);
     }
 
 

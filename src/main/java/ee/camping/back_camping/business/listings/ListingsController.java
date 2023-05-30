@@ -46,6 +46,8 @@ public class ListingsController {
         listingsService.deleteListing(listingId);
     }
 
+
+
     @GetMapping("/listings")
     @Operation(summary = "Tagastab kõikide telkimisplatside preview andmed (nime, pildi, hinna, keskmise skoori ja skooride arvu)")
     public List<ListingPreviewDto> findAllActiveListingsPreview() {
@@ -59,7 +61,11 @@ public class ListingsController {
         return listingsService.getListing(listingId);
     }
 
-
+    @DeleteMapping("/my-listings")
+    @Operation(summary = "Telkimisplatsi kustutamine(deaktiveerimine)", description = "Anname listingId ja märgime staatuse deaktiivseks.")
+    public void deactivateListing(@RequestParam Integer listingId) {
+        listingsService.deactivateListing(listingId);
+    }
 
 
 

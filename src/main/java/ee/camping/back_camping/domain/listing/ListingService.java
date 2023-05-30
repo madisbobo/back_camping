@@ -15,8 +15,8 @@ public class ListingService {
     private ListingRepository listingRepository;
 
 
-    public List<Listing> findMyListings(Integer userId) {
-        return listingRepository.findListingsBy(userId);
+    public List<Listing> findMyListings(Integer userId, String status) {
+        return listingRepository.findListingsBy(userId, status);
     }
 
     public List<Listing> findAllActiveListings(String status) {
