@@ -69,7 +69,6 @@ public class ListingsService {
     private LocationService locationService;
 
 
-
     public AddListingResponseDto addListing(NewListingDto newListingDto) {
         listingService.validateIfListingNameIsAvailable(newListingDto.getListingName());
         Listing listing = listingMapper.toListing(newListingDto);
@@ -177,13 +176,6 @@ public class ListingsService {
         listingService.deleteListing(listingId);
     }
 
-    public void deactivateListing(Integer listingId) {
-        Listing listing = listingService.getListingBy(listingId);
-        listing.setStatus(Status.DELETED.getLetter());
-        listingService.saveListing(listing);
-    }
-
-
 
     // ************** PRIVATE METHODS ************** //
     private void addFeatures(Integer listingId, ListingFullDto listingFullDto) {
@@ -206,8 +198,14 @@ public class ListingsService {
     private void addListingImages(List<ListingPreviewDto> listingPreviewDtos) {
         for (ListingPreviewDto listingPreviewDto : listingPreviewDtos) {
             Image coverImage = imageService.findCoverImagesBy(listingPreviewDto.getListingId());
-            String imageData = ImageUtil.byteArrayToBase64ImageData(coverImage.getData());
-            listingPreviewDto.setImageData(imageData);
+
+            if (coverImage == null) {
+                listingPreviewDto.setImageData("");
+            } else {
+                String imageData = ImageUtil.byteArrayToBase64ImageData(coverImage.getData());
+                listingPreviewDto.setImageData(imageData);
+            }
+
         }
     }
 
@@ -234,8 +232,11 @@ public class ListingsService {
     }
 
 
-
-
+    public void deactivateListing(Integer listingId) {
+        Listing listing = listingService.getListingBy(listingId);
+        listing.setStatus(Status.DELETED.getLetter());
+        listingService.saveListing(listing);
+    }
 
 
 }
