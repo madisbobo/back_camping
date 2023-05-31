@@ -237,5 +237,17 @@ public class ListingsService {
     }
 
 
+    public AddFullListingDto getListingInfo(Integer listingId) {
+        Listing listing = listingService.getListingBy(listingId);
+        AddFullListingDto addFullListingDto = listingMapper.toAddFullListingDto(listing);
 
+        Contact contact = contactService.getUserContactBy(listing.getOwnerUser().getId());
+        ContactDto contactDto = contactMapper.toContactDto(contact);
+        listingFullDto.setContact(contactDto);
+        addImages(listingId, addFullListingDto);
+        addFeatures(listingId, addFullListingDto);
+        return addFullListingDto;
+
+
+    }
 }

@@ -66,7 +66,8 @@ public class ListingsController {
     public void deactivateListing(@RequestParam Integer listingId) {
         listingsService.deactivateListing(listingId);
     }
-
-
+    @GetMapping("/change-listing")
+    @Operation(summary = "Tagastab kasutaja sisestatud andmed ühe listingu kohta", description = "Anname listingId ja tagastame antud listingu kasutaja poolt sisestatud andmed")
+    public AddFullListingDto getListingInfo(@RequestParam Integer listingId) {return listingsService.getListingInfo(listingId);}
 
 }
