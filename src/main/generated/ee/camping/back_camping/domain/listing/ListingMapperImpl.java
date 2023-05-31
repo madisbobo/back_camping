@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-31T10:11:01+0300",
+    date = "2023-05-31T14:27:22+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.7 (Amazon.com Inc.)"
 )
 @Component
@@ -135,6 +135,7 @@ public class ListingMapperImpl implements ListingMapper {
         editListingResponseDto.setLocationAddress( listingLocationAddress( listing ) );
         editListingResponseDto.setLocationLongitude( listingLocationLongitude( listing ) );
         editListingResponseDto.setLocationLatitude( listingLocationLatitude( listing ) );
+        editListingResponseDto.setListingName( listing.getName() );
         editListingResponseDto.setDescription( listing.getDescription() );
         editListingResponseDto.setAdditionalInfo( listing.getAdditionalInfo() );
         editListingResponseDto.setPrice( listing.getPrice() );

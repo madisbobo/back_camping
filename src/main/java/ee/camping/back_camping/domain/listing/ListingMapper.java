@@ -42,5 +42,6 @@ public interface ListingMapper {
     @Mapping(source = "location.address", target = "locationAddress")
     @Mapping(source = "location.longitude", target = "locationLongitude")
     @Mapping(source = "location.latitude", target = "locationLatitude")
+    @Mapping(source = "name", target = "listingName")
     EditListingResponseDto toEditListingResponseDto(Listing listing);
 }

@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EditListingResponseDto implements Serializable {
-    private Integer locationId;
+    private String listingName;
     private Integer locationCountyId;
     @Size(max = 255)
     @NotNull
