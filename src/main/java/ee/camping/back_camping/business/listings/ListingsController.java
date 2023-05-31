@@ -1,6 +1,7 @@
 package ee.camping.back_camping.business.listings;
 
 import ee.camping.back_camping.business.dto.*;
+import ee.camping.back_camping.domain.listing.EditListingResponseDto;
 import ee.camping.back_camping.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -68,6 +69,6 @@ public class ListingsController {
     }
     @GetMapping("/change-listing")
     @Operation(summary = "Tagastab kasutaja sisestatud andmed ühe listingu kohta", description = "Anname listingId ja tagastame antud listingu kasutaja poolt sisestatud andmed")
-    public AddFullListingDto getListingInfo(@RequestParam Integer listingId) {return listingsService.getListingInfo(listingId);}
+    public EditListingResponseDto getListingInfo(@RequestParam Integer listingId) {return listingsService.getListingInfo(listingId);}
 
 }

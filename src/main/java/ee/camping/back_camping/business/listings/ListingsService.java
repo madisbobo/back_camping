@@ -237,17 +237,29 @@ public class ListingsService {
     }
 
 
-    public AddFullListingDto getListingInfo(Integer listingId) {
+    public EditListingResponseDto getListingInfo(Integer listingId) {
         Listing listing = listingService.getListingBy(listingId);
-        AddFullListingDto addFullListingDto = listingMapper.toAddFullListingDto(listing);
-
-        Contact contact = contactService.getUserContactBy(listing.getOwnerUser().getId());
-        ContactDto contactDto = contactMapper.toContactDto(contact);
-        listingFullDto.setContact(contactDto);
-        addImages(listingId, addFullListingDto);
-        addFeatures(listingId, addFullListingDto);
-        return addFullListingDto;
-
+        EditListingResponseDto editListingResponseDto = listingMapper.toEditListingResponseDto(listing);
+        addImages(listingId, editListingResponseDto);
+        addFeatures(listingId, editListingResponseDto);
+        return editListingResponseDto;
 
     }
+
+    private void addFeatures(Integer listingId, EditListingResponseDto editListingResponseDto) {
+        List<ListingFeature> listingFeatures = listingFeatureService.findListingFeaturesBy(listingId);
+        List<FeatureDto> featureDtos = listingFeatureMapper.toFeatureDtos(listingFeatures);
+        editListingResponseDto.setFeatures(featureDtos);
+    }
+
+    private void addImages(Integer listingId, EditListingResponseDto editListingResponseDto) {
+        List<Image> images = imageService.findImagesBy(listingId);
+        List<String> imagesData = new ArrayList<>();
+        for (Image image : images) {
+            String imageData = ImageUtil.byteArrayToBase64ImageData(image.getData());
+            imagesData.add(imageData);
+        }
+        editListingResponseDto.setImagesData(imagesData);
+    }
+
 }

@@ -37,4 +37,10 @@ public interface ListingMapper {
     @Mapping(source = "listingId", target = "id")
     @Mapping(expression = "java(Status.ACTIVE.getLetter())", target = "status")
     Listing toFullListing(AddFullListingDto addFullListingDto);
+
+    @Mapping(source = "location.county.id", target = "locationCountyId")
+    @Mapping(source = "location.address", target = "locationAddress")
+    @Mapping(source = "location.longitude", target = "locationLongitude")
+    @Mapping(source = "location.latitude", target = "locationLatitude")
+    EditListingResponseDto toEditListingResponseDto(Listing listing);
 }
