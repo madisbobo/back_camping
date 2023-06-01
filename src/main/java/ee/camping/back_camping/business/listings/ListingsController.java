@@ -33,8 +33,8 @@ public class ListingsController {
         return listingsService.addListing(newListingDto);
     }
 
-    @PostMapping("/add-listing")
-    @Operation(summary = "Lisab uue telkimisplatsi täisinfo")
+    @PutMapping("/add-listing")
+    @Operation(summary = "Pooleli oleva listingule täisinfo lisamine")
     public void addFullListing(@RequestBody AddFullListingDto addFullListingDto) {
         listingsService.addFullListing(addFullListingDto);
     }
@@ -66,6 +66,36 @@ public class ListingsController {
     public void deactivateListing(@RequestParam Integer listingId) {
         listingsService.deactivateListing(listingId);
     }
+
+    @PutMapping("/edit-listing")
+    @Operation(summary = "Täiendab/uuendab telkimisplatsi täisinfo")
+    public void editFullListing(@RequestBody AddFullListingDto editFullListingDto) {
+        listingsService.editFullListing(editFullListingDto);
+    }
+
+    @GetMapping("/listings-by-listing-id")
+    @Operation(summary = "Tagastab avalehele kõikidest telkimisplatsidest neli eelvaadet",
+            description = "Kuvab listingu pildi, nime (listing name), ja reitingu (average score), " +
+                    "ja võimaldab neid järjestada kahanevalt listingId järgi")
+    public List<ListingPreviewDto> findAllActiveListingsPreviewSortById() {
+        return listingsService.findAndSortAllActiveListingsPreview();
+    }
+    @GetMapping("/listings-by-rating")
+    @Operation(summary = "Tagastab avalehele kõikidest telkimisplatsidest neli eelvaadet",
+            description = "Kuvab listingu pildi, nime (listing name), ja reitingu (average score), " +
+                    "ja võimaldab neid järjestada kahanevalt reitingu järgi")
+    public List<ListingPreviewDto> findAllActiveListingsPreviewSortByRating() {
+        return listingsService.findAllActiveListingsPreviewSortByRating();
+    }
+
+
+    @GetMapping("/listings-sortby-price-asc")
+    @Operation(summary = "Tagastab kõikide telkimisplatside preview andmed (nime, pildi, hinna, keskmise skoori ja skooride arvu) sorteeritult hinna alusel madalamast kõrgemaks")
+    public List<ListingPreviewDto> findAllActiveListingsPreviewSortByPrice() {
+        return listingsService.findAllActiveListingsPreviewSortByPrice();
+
+    }
+
 
 
 

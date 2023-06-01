@@ -23,6 +23,7 @@ public class AddFullListingDto implements Serializable {
     private String description;
     private String additionalInfo;
     private Integer price;
+    private Integer locationId;
     private Integer locationCountyId;
     private String locationAddress;
     private BigDecimal locationLongitude;

@@ -19,8 +19,10 @@ import ee.camping.back_camping.util.ImageUtil;
 import ee.camping.back_camping.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -67,7 +69,14 @@ public class ListingsService {
 
     @Resource
     private LocationService locationService;
+    private final ListingFeatureRepository listingFeatureRepository;
+    private final LocationRepository locationRepository;
 
+    public ListingsService(ListingFeatureRepository listingFeatureRepository,
+                           LocationRepository locationRepository) {
+        this.listingFeatureRepository = listingFeatureRepository;
+        this.locationRepository = locationRepository;
+    }
 
 
     public AddListingResponseDto addListing(NewListingDto newListingDto) {
@@ -95,6 +104,13 @@ public class ListingsService {
         return listingPreviewDtos;
     }
 
+    public List<ListingPreviewDto> findAllActiveListingsPreviewSortByPrice() {
+        List<Listing> allActiveListings = listingService.findAllActiveListingsSortedByPrice(Status.ACTIVE.getLetter());
+        List<ListingPreviewDto> listingPreviewDtos = listingMapper.toListingPreviewDtos(allActiveListings);
+        addListingImages(listingPreviewDtos);
+        addRatings(listingPreviewDtos);
+        return listingPreviewDtos;
+    }
 
     public ListingFullDto getListing(Integer listingId) {
         Listing listing = listingService.getListingBy(listingId);
@@ -112,6 +128,7 @@ public class ListingsService {
 
     }
 
+    @Transactional
     public void addFullListing(AddFullListingDto addFullListingDto) {
         Listing listing = listingMapper.toFullListing(addFullListingDto);
 
@@ -138,6 +155,46 @@ public class ListingsService {
         imageService.saveImages(images);
 
     }
+
+    @Transactional
+    public void editFullListing(AddFullListingDto editFullListingDto) {
+        Listing listing = listingMapper.toFullListing(editFullListingDto);
+
+        // Delete existing features and images
+        listingFeatureService.deleteAllBy(listing);
+        imageService.deleteAllBy(listing);
+
+        // Find and set user to listing
+        User user = userService.findUserBy(editFullListingDto.getOwnerUserId());
+        listing.setOwnerUser(user);
+
+        // Find, save and set location to listing
+        Location location = locationMapper.toLocation(editFullListingDto);
+        County county = countyService.getCountyBy(editFullListingDto.getLocationCountyId());
+        location.setCounty(county);
+        locationService.saveLocation(location);
+        listing.setLocation(location);
+
+        // save/write over the existing listing in the database
+        listingService.saveListing(listing);
+
+
+        // Delete the old location
+        locationRepository.deleteById(editFullListingDto.getLocationId());
+
+
+
+        // Create listing feature object, put relevant data into it and save it to the db
+        List<ListingFeature> listingFeatures = createListingFeatures(editFullListingDto, listing);
+        listingFeatureService.saveListingFeatures(listingFeatures);
+
+        // Create image object, put images into it and save it to the db
+        List<Image> images = createImages(editFullListingDto, listing);
+        imageService.saveImages(images);
+
+
+    }
+
 
     private List<Image> createImages(AddFullListingDto addFullListingDto, Listing listing) {
         List<Image> images = new ArrayList<>();
@@ -183,6 +240,26 @@ public class ListingsService {
         listingService.saveListing(listing);
     }
 
+
+    //ASDASDAS
+    public List<ListingPreviewDto> findAndSortAllActiveListingsPreview() {
+        List<Listing> allActiveListingsSortedById = listingService.findAllActiveListingsSortedById(Status.ACTIVE.getLetter());
+        List<ListingPreviewDto> listingPreviewDtos = listingMapper.toListingPreviewDtos(allActiveListingsSortedById);
+        addListingImages(listingPreviewDtos);
+        addRatings(listingPreviewDtos);
+        return listingPreviewDtos;
+    }
+
+
+    //ASDASDAS
+    public List<ListingPreviewDto> findAllActiveListingsPreviewSortByRating() {
+        List<Listing> allActiveListings = listingService.findAllActiveListings(Status.ACTIVE.getLetter());
+        List<ListingPreviewDto> listingPreviewDtos = listingMapper.toListingPreviewDtos(allActiveListings);
+        addListingImages(listingPreviewDtos);
+        addRatings(listingPreviewDtos);
+        listingPreviewDtos.sort(Comparator.comparingDouble(ListingPreviewDto::getAverageScore).reversed());
+        return listingPreviewDtos.subList(0, 2);
+    }
 
 
     // ************** PRIVATE METHODS ************** //
@@ -232,9 +309,6 @@ public class ListingsService {
             }
         }
     }
-
-
-
 
 
 

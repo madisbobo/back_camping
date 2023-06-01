@@ -10,6 +10,7 @@ public interface FeatureMapper {
 
     @Mapping(source = "id", target = "featureId")
     @Mapping(source = "name", target = "featureName")
+    @Mapping(constant = "false", target = "featureIsSelected")
     FeatureDto toFeatureDto(Feature feature);
     List<FeatureDto> toFeatureDtos(List<Feature> allFeatures);
 }
