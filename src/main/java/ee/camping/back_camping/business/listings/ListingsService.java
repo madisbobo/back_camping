@@ -177,7 +177,11 @@ public class ListingsService {
         listingService.deleteListing(listingId);
     }
 
-
+    public void deactivateListing(Integer listingId) {
+        Listing listing = listingService.getListingBy(listingId);
+        listing.setStatus(Status.DELETED.getLetter());
+        listingService.saveListing(listing);
+    }
 
 
 
@@ -236,11 +240,7 @@ public class ListingsService {
     }
 
 
-    public void deactivateListing(Integer listingId) {
-        Listing listing = listingService.getListingBy(listingId);
-        listing.setStatus(Status.DELETED.getLetter());
-        listingService.saveListing(listing);
-    }
+
 
 
     public EditListingResponseDto getListingInfo(Integer listingId) {
