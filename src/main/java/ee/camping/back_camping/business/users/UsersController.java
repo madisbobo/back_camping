@@ -27,12 +27,6 @@ public class UsersController {
         return usersService.addUser(newUserDto);
     }
 
-    @PostMapping("/signup-info")
-    @Operation(summary = "Uue kasutaja info lisamine", description = "Anname kaasa userId, eesnime, perekonnanime, e-posti, telefoni nr-i (optional) ja profiilipildi (optional)")
-    public void addUserContact(@RequestBody ContactDto contactDto) {
-        usersService.addUserContact(contactDto);
-    }
-
     @DeleteMapping("/signup-info")
     @Operation(summary = "Pooleli oleva kasutaja kustutamine", description = "Anname kaasa userId ja kustutame kasutaja")
     public void deleteUser(@RequestParam Integer userId) {

@@ -13,6 +13,7 @@ import ee.camping.back_camping.domain.user.role.Role;
 import ee.camping.back_camping.domain.user.role.RoleService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsersService {
@@ -34,7 +35,7 @@ public class UsersService {
     private ContactMapper contactMapper;
 
 
-
+    @Transactional
     public LoginResponseDto addUser(NewUserDto newUserDto) {
         // Kontrolli kas selline kasutajanimi on juba olemas. Kui on, siis throw error
         userService.validateIfUsernameIsAvailable(newUserDto.getUsername());
@@ -43,19 +44,14 @@ public class UsersService {
         user.setRole(role);
 
         userService.addUser(user);
-
-        // Mappime olemasoleva user entity ümber loginResponseDto-ks, et tagastada UserId ja RoleName
-        return userMapper.toLoginResponseDto(user);
-
-    }
-
-    public void addUserContact(ContactDto contactDto) {
-        Contact contact = contactMapper.toContact(contactDto);
-        User user = userService.findUserBy(contactDto.getUserId());
-        contact.setUser(user);
+        Contact contact = createBlankContact(user);
         contactService.addContact(contact);
 
+        // Mappime olemasoleva user entity ümber loginResponseDto-ks, et tagastada UserId ja RoleName
+        return userMapper.toLoginResponseDto(user, false);
+
     }
+
 
     public void deleteUser(Integer userId) {
         userService.deleteUserBy(userId);
@@ -73,5 +69,14 @@ public class UsersService {
         User user = userService.findUserBy(contactDto.getUserId());
         contact.setUser(user);
         contactService.addContact(contact);
+    }
+
+    private static Contact createBlankContact(User user) {
+        Contact contact = new Contact();
+        contact.setUser(user);
+        contact.setFirstName("");
+        contact.setLastName("");
+        contact.setEmail("");
+        return contact;
     }
 }

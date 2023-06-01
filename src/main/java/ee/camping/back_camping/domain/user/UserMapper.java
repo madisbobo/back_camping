@@ -8,9 +8,11 @@ import org.mapstruct.*;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, imports = {Status.class})
 public interface UserMapper {
 
-    @Mapping(source = "id", target = "userId")
-    @Mapping(source = "role.name", target = "roleName")
-    LoginResponseDto toLoginResponseDto(User user);
+    @Mapping(expression = "java(user.getId())", target = "userId")
+    @Mapping(expression = "java(user.getRole().getName())", target = "roleName")
+    @Mapping(expression = "java(profileIsCompleted)", target = "profileIsCompleted")
+    LoginResponseDto toLoginResponseDto(User user, Boolean profileIsCompleted);
+
 
 
     @Mapping(expression = "java(Status.ACTIVE.getLetter())", target = "status")

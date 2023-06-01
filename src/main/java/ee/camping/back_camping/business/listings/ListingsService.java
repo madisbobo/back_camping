@@ -258,7 +258,11 @@ public class ListingsService {
         addListingImages(listingPreviewDtos);
         addRatings(listingPreviewDtos);
         listingPreviewDtos.sort(Comparator.comparingDouble(ListingPreviewDto::getAverageScore).reversed());
-        return listingPreviewDtos.subList(0, 2);
+
+        if (listingPreviewDtos.size() > 2) {
+            return listingPreviewDtos.subList(0, 2);
+        }
+        return listingPreviewDtos;
     }
 
 
