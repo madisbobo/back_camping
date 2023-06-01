@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-29T16:22:22+0300",
+    date = "2023-05-31T19:26:15+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -22,7 +22,7 @@ public class ListingFeatureMapperImpl implements ListingFeatureMapper {
 
         FeatureDto featureDto = new FeatureDto();
 
-        featureDto.setFeatureId( listingFeature.getId() );
+        featureDto.setFeatureId( listingFeatureFeatureId( listingFeature ) );
         featureDto.setFeatureName( listingFeatureFeatureName( listingFeature ) );
         featureDto.setFeatureIsSelected( listingFeature.getIsSelected() );
 
@@ -55,6 +55,21 @@ public class ListingFeatureMapperImpl implements ListingFeatureMapper {
         listingFeature.setIsSelected( featureDto.getFeatureIsSelected() );
 
         return listingFeature;
+    }
+
+    private Integer listingFeatureFeatureId(ListingFeature listingFeature) {
+        if ( listingFeature == null ) {
+            return null;
+        }
+        Feature feature = listingFeature.getFeature();
+        if ( feature == null ) {
+            return null;
+        }
+        Integer id = feature.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 
     private String listingFeatureFeatureName(ListingFeature listingFeature) {

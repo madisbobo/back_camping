@@ -18,4 +18,9 @@ public interface ListingRepository extends JpaRepository<Listing, Integer> {
     @Query("select (count(l) > 0) from Listing l where l.name = ?1")
     boolean listingExistsBy(String name);
 
+    @Query("select l from Listing l where l.status = ?1 order by l.price")
+    List<Listing> findAllByStatusOrderByPriceAsc(String status);
+
+    @Query("select l from Listing l where l.status = ?1 order by l.id DESC limit 2")
+    List<Listing> findAndSortByListingIdAllListings(String status);
 }

@@ -25,7 +25,9 @@ public class ListingFullDto implements Serializable {
     private List <String> imagesData;
     private List <FeatureDto> features;
 
+    private Integer countyId;
     private String countyName;
+    private Integer locationId;
     private String locationAddress;
     private BigDecimal locationLongitude;
     private BigDecimal locationLatitude;

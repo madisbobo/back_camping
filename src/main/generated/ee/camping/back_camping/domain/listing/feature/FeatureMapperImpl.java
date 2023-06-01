@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-30T11:58:26+0300",
+    date = "2023-05-30T15:58:12+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -24,6 +24,8 @@ public class FeatureMapperImpl implements FeatureMapper {
 
         featureDto.setFeatureId( feature.getId() );
         featureDto.setFeatureName( feature.getName() );
+
+        featureDto.setFeatureIsSelected( false );
 
         return featureDto;
     }

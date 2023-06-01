@@ -40,4 +40,12 @@ public class ListingService {
     public void deleteListing(Integer listingId) {
         listingRepository.deleteById(listingId);
     }
+
+    public List<Listing> findAllActiveListingsSortedByPrice(String status) {
+        return listingRepository.findAllByStatusOrderByPriceAsc(status);
+    }
+
+    public List<Listing> findAllActiveListingsSortedById(String status) {
+        return listingRepository.findAndSortByListingIdAllListings(status);
+    }
 }

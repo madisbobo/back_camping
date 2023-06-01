@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-31T14:27:22+0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.7 (Amazon.com Inc.)"
+    date = "2023-06-01T09:04:27+0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
 public class ListingMapperImpl implements ListingMapper {
@@ -77,12 +77,14 @@ public class ListingMapperImpl implements ListingMapper {
         listingFullDto.setListingDescription( listing.getDescription() );
         listingFullDto.setListingAdditionalInfo( listing.getAdditionalInfo() );
         listingFullDto.setCountyName( listingLocationCountyName( listing ) );
+        listingFullDto.setCountyId( listingLocationCountyId( listing ) );
+        listingFullDto.setLocationId( listingLocationId( listing ) );
         listingFullDto.setLocationAddress( listingLocationAddress( listing ) );
         listingFullDto.setLocationLongitude( listingLocationLongitude( listing ) );
         listingFullDto.setLocationLatitude( listingLocationLatitude( listing ) );
-        Integer id = listingOwnerUserId( listing );
-        if ( id != null ) {
-            listingFullDto.setOwnerId( String.valueOf( id ) );
+        Integer id2 = listingOwnerUserId( listing );
+        if ( id2 != null ) {
+            listingFullDto.setOwnerId( String.valueOf( id2 ) );
         }
         listingFullDto.setPrice( listing.getPrice() );
 
@@ -123,26 +125,6 @@ public class ListingMapperImpl implements ListingMapper {
         return listing;
     }
 
-    @Override
-    public EditListingResponseDto toEditListingResponseDto(Listing listing) {
-        if ( listing == null ) {
-            return null;
-        }
-
-        EditListingResponseDto editListingResponseDto = new EditListingResponseDto();
-
-        editListingResponseDto.setLocationCountyId( listingLocationCountyId( listing ) );
-        editListingResponseDto.setLocationAddress( listingLocationAddress( listing ) );
-        editListingResponseDto.setLocationLongitude( listingLocationLongitude( listing ) );
-        editListingResponseDto.setLocationLatitude( listingLocationLatitude( listing ) );
-        editListingResponseDto.setListingName( listing.getName() );
-        editListingResponseDto.setDescription( listing.getDescription() );
-        editListingResponseDto.setAdditionalInfo( listing.getAdditionalInfo() );
-        editListingResponseDto.setPrice( listing.getPrice() );
-
-        return editListingResponseDto;
-    }
-
     private String listingLocationCountyName(Listing listing) {
         if ( listing == null ) {
             return null;
@@ -160,6 +142,40 @@ public class ListingMapperImpl implements ListingMapper {
             return null;
         }
         return name;
+    }
+
+    private Integer listingLocationCountyId(Listing listing) {
+        if ( listing == null ) {
+            return null;
+        }
+        Location location = listing.getLocation();
+        if ( location == null ) {
+            return null;
+        }
+        County county = location.getCounty();
+        if ( county == null ) {
+            return null;
+        }
+        Integer id = county.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
+    private Integer listingLocationId(Listing listing) {
+        if ( listing == null ) {
+            return null;
+        }
+        Location location = listing.getLocation();
+        if ( location == null ) {
+            return null;
+        }
+        Integer id = location.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 
     private String listingLocationAddress(Listing listing) {
@@ -216,25 +232,6 @@ public class ListingMapperImpl implements ListingMapper {
             return null;
         }
         Integer id = ownerUser.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
-    }
-
-    private Integer listingLocationCountyId(Listing listing) {
-        if ( listing == null ) {
-            return null;
-        }
-        Location location = listing.getLocation();
-        if ( location == null ) {
-            return null;
-        }
-        County county = location.getCounty();
-        if ( county == null ) {
-            return null;
-        }
-        Integer id = county.getId();
         if ( id == null ) {
             return null;
         }

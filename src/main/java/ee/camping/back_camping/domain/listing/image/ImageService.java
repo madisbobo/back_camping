@@ -1,5 +1,6 @@
 package ee.camping.back_camping.domain.listing.image;
 
+import ee.camping.back_camping.domain.listing.Listing;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,9 @@ public class ImageService {
 
     public void saveImages(List<Image> images) {
         imageRepository.saveAll(images);
+    }
+
+    public void deleteAllBy(Listing listing) {
+        imageRepository.deleteAllBy(listing);
     }
 }

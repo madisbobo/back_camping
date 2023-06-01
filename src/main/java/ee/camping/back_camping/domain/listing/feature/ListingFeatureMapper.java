@@ -9,7 +9,7 @@ import java.util.List;
 public interface ListingFeatureMapper {
 
 
-    @Mapping(source = "id", target = "featureId")
+    @Mapping(source = "feature.id", target = "featureId")
     @Mapping(source = "feature.name", target = "featureName")
     @Mapping(source = "isSelected", target = "featureIsSelected")
     FeatureDto toFeatureDto(ListingFeature listingFeature);
