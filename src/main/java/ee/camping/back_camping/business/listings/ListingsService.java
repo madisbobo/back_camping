@@ -283,8 +283,14 @@ public class ListingsService {
     private void addListingImages(List<ListingPreviewDto> listingPreviewDtos) {
         for (ListingPreviewDto listingPreviewDto : listingPreviewDtos) {
             Image coverImage = imageService.findCoverImagesBy(listingPreviewDto.getListingId());
-            String imageData = ImageUtil.byteArrayToBase64ImageData(coverImage.getData());
-            listingPreviewDto.setImageData(imageData);
+
+            if (coverImage == null) {
+                listingPreviewDto.setImageData("");
+            } else {
+                String imageData = ImageUtil.byteArrayToBase64ImageData(coverImage.getData());
+                listingPreviewDto.setImageData(imageData);
+            }
+
         }
     }
 

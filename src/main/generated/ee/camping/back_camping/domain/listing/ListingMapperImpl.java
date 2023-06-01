@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-01T09:04:27+0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
+    date = "2023-06-01T10:03:27+0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.7 (Amazon.com Inc.)"
 )
 @Component
 public class ListingMapperImpl implements ListingMapper {
@@ -123,6 +123,26 @@ public class ListingMapperImpl implements ListingMapper {
         listing.setStatus( Status.ACTIVE.getLetter() );
 
         return listing;
+    }
+
+    @Override
+    public EditListingResponseDto toEditListingResponseDto(Listing listing) {
+        if ( listing == null ) {
+            return null;
+        }
+
+        EditListingResponseDto editListingResponseDto = new EditListingResponseDto();
+
+        editListingResponseDto.setLocationCountyId( listingLocationCountyId( listing ) );
+        editListingResponseDto.setLocationAddress( listingLocationAddress( listing ) );
+        editListingResponseDto.setLocationLongitude( listingLocationLongitude( listing ) );
+        editListingResponseDto.setLocationLatitude( listingLocationLatitude( listing ) );
+        editListingResponseDto.setListingName( listing.getName() );
+        editListingResponseDto.setDescription( listing.getDescription() );
+        editListingResponseDto.setAdditionalInfo( listing.getAdditionalInfo() );
+        editListingResponseDto.setPrice( listing.getPrice() );
+
+        return editListingResponseDto;
     }
 
     private String listingLocationCountyName(Listing listing) {
