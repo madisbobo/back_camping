@@ -17,7 +17,7 @@ INSERT INTO public."user"(id, role_id, username, password, status) VALUES (DEFAU
 
 /*contact*/
 INSERT INTO public.contact(id, user_id, first_name, last_name, email, phone_no, image) VALUES (DEFAULT, 1, 'Admin', 'Admin', 'admin@mail.ee', '111222333', null);
-INSERT INTO public.contact(id, user_id, first_name, last_name, email, phone_no, image) VALUES (DEFAULT, 2, 'Rain', 'Viljandist', 'rain@mail.ee', '222333444', null);
+INSERT INTO public.contact(id, user_id, first_name, last_name, email, phone_no, image) VALUES (DEFAULT, 2, 'Rain', 'Matk', 'rain@mail.ee', '222333444', null);
 INSERT INTO public.contact(id, user_id, first_name, last_name, email, phone_no, image) VALUES (DEFAULT, 3, 'Peeter', 'Mets', 'matka@mail.ee', '333222111', null);
 INSERT INTO public.contact(id, user_id, first_name, last_name, email, phone_no, image) VALUES (DEFAULT, 4, 'Ants', 'Passiivne', 'ants@mail.ee', 8375957, null);
 INSERT INTO public.contact(id, user_id, first_name, last_name, email, phone_no, image) VALUES (DEFAULT, 5, 'Tõnis', 'Tamm', 'tonis43@mail.ee', 9603759, null);
