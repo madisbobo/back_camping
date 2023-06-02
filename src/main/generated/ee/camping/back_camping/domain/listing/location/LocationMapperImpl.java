@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-01T15:22:12+0300",
+    date = "2023-06-01T22:21:20+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -22,7 +22,7 @@ public class LocationMapperImpl implements LocationMapper {
 
         location.setAddress( addFullListingDto.getLocationAddress() );
         location.setLatitude( addFullListingDto.getLocationLatitude() );
-        location.setLongitude( addFullListingDto.getLocationLatitude() );
+        location.setLongitude( addFullListingDto.getLocationLongitude() );
 
         return location;
     }
