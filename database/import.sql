@@ -49,7 +49,7 @@ INSERT INTO public.location(id, county_id, address, longitude, latitude) VALUES 
 INSERT INTO public.location(id, county_id, address, longitude, latitude) VALUES (DEFAULT, 2, 'Metsaküla, Hiiumaa', 58.928530, 22.659848);
 INSERT INTO public.location(id, county_id, address, longitude, latitude) VALUES (DEFAULT, 2, 'Mägipe, Hiiumaa', 58.929341, 22.225784);
 INSERT INTO public.location(id, county_id, address, longitude, latitude) VALUES (DEFAULT, 14, 'Karisöödi küla, Sepa talu', 57.539412, 26.570079);
-INSERT INTO public.location(id, county_id, address, longitude, latitude) VALUES (DEFAULT, 1, 'Mäe tee 10, lohusalu', 59.393887, 224.196887);
+INSERT INTO public.location(id, county_id, address, longitude, latitude) VALUES (DEFAULT, 1, 'Mäe tee 10, lohusalu', 59.393887, 24.196887);
 INSERT INTO public.location(id, county_id, address, longitude, latitude) VALUES (DEFAULT, 13, 'Soomaa, Kuresoo', 58.503700, 25.077465);
 
 
@@ -59,7 +59,7 @@ INSERT INTO public.listing (id, owner_user_id, location_id, name, description, a
 INSERT INTO public.listing (id, owner_user_id, location_id, name, description, additional_info, price, status) VALUES (DEFAULT, 6, 5, 'Mareti tagahoov', 'Eestiaegse maja vana taluhoov ilusas Laulasmaa külas.', 'Pakume süüa ka"', 25, 'A');
 INSERT INTO public.listing (id, owner_user_id, location_id, name, description, additional_info, price, status) VALUES (DEFAULT, 5, 6, 'Sooonn', 'Matkaonn Navesti jõe lähedal Kuresoo rabas. Ligipääs jala ja kanuuga. Kuula sookurgede hüüdeid!', ':)', 28, 'A');
 INSERT INTO public.listing (id, owner_user_id, location_id, name, description, additional_info, price, status) VALUES (DEFAULT, 8, 3, 'Tädi Maali mets', 'Kaunis koht Kõpu looduskaitsealal. Lähedal meri ja Rebastemäe matkarada.','lähim hoone 700m kaugusel', 10, 'A');
-INSERT INTO public.listing (id, owner_user_id, location_id, name, description, additional_info, price, status) VALUES (DEFAULT, 3, 4, 'Peetri heinamaa', 'Tule telgi mu heinamaal kui tahad.', 'Telkida saab','',10, 'A');
+INSERT INTO public.listing (id, owner_user_id, location_id, name, description, additional_info, price, status) VALUES (DEFAULT, 3, 4, 'Peetri heinamaa', 'Tule telgi mu heinamaal kui tahad.','',10, 'A');
 INSERT INTO public.listing (id, owner_user_id, location_id, name, description, additional_info, price, status) VALUES (DEFAULT, 7, 2, 'Metsavana lõkkeplats', 'Tule telgi sügaval Hiiumaa põlismetsas!','Loomad lähedal.',16, 'A');
 
 /*features*/
